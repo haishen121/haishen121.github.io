@@ -1,4 +1,3 @@
-ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNToxZjNkNjdiNC02OTI5LTQ1OTgtOTBjYS04NGE4NDFiZjAyZTQ@sg1.lianpi.xyz:56138#github.com/freefq%20-%20%E6%96%B0%E5%8A%A0%E5%9D%A1Amazon%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%204
 ss://YWVzLTEyOC1nY206ODNYdlg0Vm8lKjNh@216.52.183.243:80?plugin=obfs-local%3Bobfs%3Dhttp#%E7%BA%BD%E7%BA%A6KT%7C%40ripaojiedian
 ss://YWVzLTEyOC1nY206ZzEyc1FpI3NzIyYx@183.232.170.32:20023?plugin=v2ray-plugin%3Bmode%3Dwebsocket%3Bmux%3D8#%E6%97%A5%E6%9C%ACKT%7C%40ripaojiedian
 ss://YWVzLTEyOC1nY206ZzEyc1FpI3NzIyYx@183.232.170.32:30017?plugin=v2ray-plugin%3Bmode%3Dwebsocket%3Bmux%3D8#%E6%97%A5%E6%9C%ACKT2%7C%40ripaojiedian
