@@ -1,0 +1,131 @@
+name: Sync FreeNodes
+
+on:
+  schedule:
+    # 每天 06:00 / 12:00 / 18:00 (UTC) 执行一次
+    - cron: '0 6,12,18 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-freenodes
+  cancel-in-progress: false
+
+env:
+  SRC_REPO: https://github.com/Barabama/FreeNodes.git
+  SRC_BRANCH: feat/ai-crawler-v2
+  SRC_SUBDIR: nodes
+  DST_SUBDIR: nodes
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 本仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 拉取源仓库 (sparse checkout)
+        run: |
+          set -euo pipefail
+          rm -rf .freenodes-src
+          git clone \
+            --filter=blob:none \
+            --no-tags \
+            --single-branch \
+            --branch "${SRC_BRANCH}" \
+            --sparse \
+            "${SRC_REPO}" .freenodes-src
+          git -C .freenodes-src sparse-checkout set "${SRC_SUBDIR}"
+          git -C .freenodes-src rev-parse --short HEAD
+
+      - name: 拷贝文件到本地 ${DST_SUBDIR} 目录
+        run: |
+          set -euo pipefail
+          mkdir -p "${DST_SUBDIR}"
+          if [ -d ".freenodes-src/${SRC_SUBDIR}" ]; then
+            cp -a ".freenodes-src/${SRC_SUBDIR}/." "${DST_SUBDIR}/"
+          else
+            echo "::error::源仓库 ${SRC_REPO} 的 ${SRC_BRANCH} 分支下不存在 ${SRC_SUBDIR} 目录"
+            exit 1
+          fi
+          echo "文件总数: $(find "${DST_SUBDIR}" -type f ! -name 'index.md' | wc -l)"
+
+      - name: 生成 index.md
+        run: |
+          set -euo pipefail
+          SRC_DIR=".freenodes-src"
+          OUT="${DST_SUBDIR}/index.md"
+          SRC_COMMIT=$(git -C "${SRC_DIR}" rev-parse HEAD)
+
+          {
+            echo "# Nodes 索引"
+            echo
+            echo "- 数据源: \`${SRC_REPO}\`"
+            echo "- 分支: \`${SRC_BRANCH}\`"
+            echo "- 源目录: \`${SRC_SUBDIR}/\`"
+            echo "- 源提交: \`${SRC_COMMIT}\`"
+            echo "- 生成时间 (UTC): $(date -u '+%Y-%m-%d %H:%M:%S')"
+            echo
+            echo "| 文件名 | 更新时间 |"
+            echo "| --- | --- |"
+          } > "${OUT}"
+
+          count=0
+          while IFS= read -r file; do
+            rel="${file#./}"
+            name=$(basename "${rel}")
+            # 优先使用源仓库中该文件最后一次提交的时间
+            src_path="${SRC_SUBDIR}/${rel}"
+            updated=$(git -C "${SRC_DIR}" log -1 --format=%cI -- "${src_path}" 2>/dev/null || true)
+            if [ -z "${updated}" ]; then
+              updated=$(date -u -r "${file}" '+%Y-%m-%dT%H:%M:%S%z' 2>/dev/null || echo "-")
+            fi
+            # 去掉时区中的冒号，保证 Markdown 表格/链接可读性
+            updated=$(echo "${updated}" | sed 's/\([+-][0-9][0-9]\):\([0-9][0-9]\)$/\1\2/')
+            # 转义表格分隔符，并对链接做最小 URL 编码，避免文件名含空格/括号/方括号时渲染错乱
+            safe_name=$(printf '%s' "${name}" | sed 's/|/\\|/g')
+            safe_rel=$(printf '%s' "${rel}" \
+              | sed -e 's/%/%25/g' -e 's/ /%20/g' -e 's/(/%28/g' -e 's/)/%29/g' \
+                    -e 's/\[/%5B/g' -e 's/\]/%5D/g' -e 's/|/%7C/g' -e 's/</%3C/g' -e 's/>/%3E/g')
+            printf '| [%s](%s) | %s |\n' "${safe_name}" "${safe_rel}" "${updated}" >> "${OUT}"
+            count=$((count + 1))
+          done < <(cd "${DST_SUBDIR}" && find . -type f ! -name 'index.md' | sort)
+
+          {
+            echo
+            echo "共 ${count} 个文件。"
+          } >> "${OUT}"
+          echo "index.md 已生成，共 ${count} 个文件"
+
+      - name: 提交并推送
+        env:
+          # 推送到触发器所在的分支；workflow_dispatch 时取当前分支，schedule 时取默认分支
+          TARGET_BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: |
+          set -euo pipefail
+          rm -rf .freenodes-src
+
+          # 定时任务在默认分支的 ref 上运行，gh-pages 等特殊 ref 下不做推送
+          if [ -z "${TARGET_BRANCH}" ] || [ "${TARGET_BRANCH}" = "gh-pages" ]; then
+            echo "::notice::当前 ref 为 '${TARGET_BRANCH}'，跳过提交"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A "${DST_SUBDIR}"
+          if git diff --cached --quiet; then
+            echo "没有变化需要提交"
+            exit 0
+          fi
+
+          git commit -m "chore(nodes): sync from ${SRC_REPO}@${SRC_BRANCH} ($(date -u '+%Y-%m-%d %H:%M UTC'))"
+
+          git push origin "HEAD:${TARGET_BRANCH}"
+          echo "推送成功 -> ${TARGET_BRANCH}"
+                 
