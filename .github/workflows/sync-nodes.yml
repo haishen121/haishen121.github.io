@@ -18,7 +18,7 @@ concurrency:
 
 env:
   SRC_REPO: https://github.com/Barabama/FreeNodes.git
-  SRC_BRANCH: feat/ai-crawler-v2
+  SRC_BRANCH: main
   SRC_SUBDIR: nodes
   DST_SUBDIR: nodes
 
