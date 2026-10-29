@@ -1,493 +1,340 @@
 proxies:
-- name: 8元老牌专线机场：cczzuu.top
-  server: us22.sofast.live
-  port: 58011
-  type: vless
-  uuid: 0afc6426-606c-48e7-bd70-3c424a416842
-  tls: false
-  tfo: false
-  skip-cert-verify: false
-  network: tcp
-  udp: true
-- name: 🇺🇸 美国_BQ1D5A
-  server: jp.sofast.live
-  port: 52683
-  type: vless
-  uuid: 399b6b23-cc40-4831-a494-61948e2df133
-  tls: false
-  tfo: false
-  skip-cert-verify: false
-  network: tcp
-  udp: true
-- name: 🇳🇱 荷兰_S9C6C2
-  server: snow.betust.net
+- type: vless
+  server: tau1.freerunet.online
   port: 443
-  type: vless
-  uuid: 3b1fa839-2cb9-4511-9711-08800450aea3
+  udp: true
+  uuid: ca14493b-b984-4ffb-bc0e-9cb5da969e15
   tls: true
-  tfo: false
+  servername: tau1.freerunet.online
+  client-fingerprint: safari
+  reality-opts:
+    public-key: "l1mx_plNc2oiWxJCcZLh3SGfFU-5QxYpgQ__Ea59WEg"
+    short-id: "4a7b1c8d"
   flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: 92lzqaBZnD5IP_subNDLotGMBs4u7STDMhqoBz1OADE
-    short-id: b7a5c406
-  servername: api37.betust.net
-  client-fingerprint: chrome
-  network: tcp
+  name: 8元老牌专线机场：cczzuu.top
+- type: vless
+  server: 213.152.180.104
+  port: 2094
   udp: true
-- name: 🇩🇪 德国_CD43Y5
-  server: 31.59.216.141
-  port: 443
-  type: vless
-  uuid: c6cfcc53-9271-4ef7-88c5-5141621c8db1
+  uuid: 372af4ce-2153-4061-822c-b657172308f6
   tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: 7zsU1U-30jh-qqfmqZukMfoqHB75ksKFA5aQFi8LGW4
-    short-id: 70b4ca
-  servername: 193.23.216.239.cdn-one.org
-  network: tcp
-  udp: true
-- name: 🇮🇹 意大利_4P2WCP
-  server: 202.50.253.27
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇳🇱 荷兰_NI1Y2L
-  server: ss3.soreanapanel.com
-  port: 8080
-  type: vless
-  uuid: 22136b20-6365-4ae6-b21a-799a00ab1346
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  reality-opts:
-    public-key: t_z1GMEv2FYr0Bo57WBuKRRlkyOMj40025j-OcWCtkU
-    short-id: 8d542c72c84f
-  servername: graphs.4cdn.de
-  client-fingerprint: chrome
-  network: tcp
-  udp: true
-- name: 🇮🇹 意大利_7ZYH93
-  server: 202.50.253.72
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_1S7QM0
-  server: 202.50.253.36
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇳🇱 荷兰_FZEIX8
-  server: app-sh-185.spbstudentlife.com
-  port: 443
-  type: vless
-  uuid: 074690f9-cb30-44f5-84e5-f3ce8fc6cf29
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: rM3p4mL72kcpvnxVRYxl5J0zPbxE2U3iZua0F29SHTQ
-    short-id: 8d942904d3e87323
-  servername: assets-sh-185.spbstudentlife.com
-  client-fingerprint: randomized
-  network: tcp
-  udp: true
-- name: 🇺🇸 美国_E1AHJ5
-  server: 78.17.178.125
-  port: 443
-  type: vless
-  uuid: 6c713691-3ca2-4446-ad25-113d1bed6b03
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: jcp4Lj_qYzxtkalm_XFjrmvqEMGRG7sb19yMwLe16WE
-    short-id: e0215064d8d1fd7c
-  servername: cdn.tbank.ru
-  client-fingerprint: chrome
-  network: tcp
-  udp: true
-- name: 🇸🇪 瑞典_HBF1R9
-  server: 171.25.158.95
-  port: 1080
-  type: socks5
-  udp: true
-  username: Og==
-  password: Og==
-- name: 8元老牌专线机场：cczzuu.top
-  server: 47.238.210.5
-  port: 13779
-  type: vless
-  uuid: 928e6cce-8ced-4243-9a48-a6642edd09b0
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  reality-opts:
-    public-key: llTyp52oRXnJmQ3I9UUrmlwbMA79B-wLCRHCu-8dLGg
-    short-id: af1bdd293097b664
-  servername: tesla.com
-  client-fingerprint: chrome
-  network: tcp
-  udp: true
-- name: 🇺🇸 美国_45FPLT
-  server: jp.sofast.live
-  port: 52683
-  type: vless
-  uuid: 399b6b23-cc40-4831-a494-61948e2df133
-  tls: false
-  tfo: false
-  skip-cert-verify: false
-  network: tcp
-  udp: true
-- name: 🇺🇸 美国_HEJWP6
-  server: us22.sofast.live
-  port: 58011
-  type: vless
-  uuid: 0afc6426-606c-48e7-bd70-3c424a416842
-  tls: false
-  tfo: false
-  skip-cert-verify: false
-  network: tcp
-  udp: true
-- name: 🇳🇱 荷兰_ZWM9G6
-  server: 77.239.110.89
-  port: 443
-  type: vless
-  uuid: a500be68-4ff6-433b-9968-472be69fab14
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: ui9MLRYZIz7S6_1E4fZgoamwTypfQAMwJ1olxGcWomE
-    short-id: fc70174007a393b4
-  servername: netherlands02.azotvpn.xyz
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-- name: 🇷🇺 俄罗斯_VXD6GJ
-  server: 45.128.78.178
-  port: 443
-  type: vless
-  uuid: 261160d5-0343-4b85-8c28-3d40dd681559
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
-    short-id: ''
-  servername: ozon.ru
-  client-fingerprint: ios
-  network: tcp
-  udp: true
-- name: 🇩🇪 德国_7PBT3I
-  server: 31.59.216.141
-  port: 443
-  type: vless
-  uuid: c6cfcc53-9271-4ef7-88c5-5141621c8db1
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: 7zsU1U-30jh-qqfmqZukMfoqHB75ksKFA5aQFi8LGW4
-    short-id: 70b4ca
-  servername: 193.23.216.239.cdn-one.org
-  client-fingerprint: chrome
-  network: tcp
-  udp: true
-- name: 🇫🇷 法国_94ISJ6
-  server: 213.199.47.140
-  port: 1080
-  type: socks5
-  udp: true
-  username: Og==
-  password: Og==
-- name: 🇦🇺 澳大利亚_VG105Y
-  server: funagfrdfs.alixxplay.com
-  port: 54528
-  type: vless
-  uuid: 57beeeb0-03fc-4fc9-94da-7604488a7134
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: 7GvJVbR6BRhtrc8-rcZvB8qTFUF1LPeM_MmoZ04mBxo
-    short-id: 54cca3c1c1c7
   servername: www.apple.com
   client-fingerprint: chrome
-  network: tcp
-  udp: true
-- name: 🇹🇷 土耳其_84TUIC
-  server: 45.74.158.57
-  port: 2218
-  type: vless
-  uuid: 4476ca08-bdb4-41c1-bae4-a960bdb28c19
-  tls: true
-  tfo: false
-  skip-cert-verify: false
   reality-opts:
-    public-key: bWIOrQAqUWCrz6BGdwaG42xaV-HEo8sUdGqVktUh0XU
-    short-id: cc80ef
-  servername: www.apple.com
-  network: tcp
-  udp: true
-- name: 🇮🇹 意大利_4JB6EU
-  server: 202.50.253.36
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_7YNEUC
-  server: 202.50.253.90
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_1GLXXF
-  server: 202.50.253.45
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_RR4J7X
-  server: 202.50.253.54
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇺🇸 美国_4HBEDK
-  server: 78.17.178.125
+    public-key: "jHtC6ayzhkd_GVNF5TIGPu9iVpqUltBAQj1dpGJHwxs"
+    short-id: "55986a94e2228791"
+  flow: xtls-rprx-vision
+  name: 德国_B7167B
+- type: vless
+  server: ru11.oshost.network
   port: 443
-  type: vless
-  uuid: 6c713691-3ca2-4446-ad25-113d1bed6b03
+  udp: true
+  uuid: afbd410e-1663-4f40-9d3b-df5117aa23ca
   tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: jcp4Lj_qYzxtkalm_XFjrmvqEMGRG7sb19yMwLe16WE
-    short-id: e0215064d8d1fd7c
-  servername: cdn.tbank.ru
+  servername: ru11.oshost.network
   client-fingerprint: chrome
-  network: tcp
-  udp: true
-- name: 8元老牌专线机场：cczzuu.top
-  server: 154.36.158.197
-  port: 8388
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: BeaUf9c0AEWH40Pu
-- name: 🇺🇸 美国_FB3993
-  server: jp.sofast.live
-  port: 52683
-  type: vless
-  uuid: 399b6b23-cc40-4831-a494-61948e2df133
-  tls: false
-  tfo: false
-  skip-cert-verify: false
-  network: tcp
-  udp: true
-- name: 🇻🇳 越南_1AB4FB
-  server: funagfrdfs.alixxplay.com
-  port: 55688
-  type: vless
-  uuid: 57beeeb0-03fc-4fc9-94da-7604488a7134
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
   reality-opts:
-    public-key: KeV1nArisy7FO5DjqTSmn0hBnlNd38rzhbIMMpe-MBw
-    short-id: a46bb5972cf50671
-  servername: bilibili-vn.biliimg.com
-  client-fingerprint: chrome
-  network: tcp
+    public-key: "52fsWySqEpUvCt-jbEy2rYjVIZBYwoqsGfmSef8_UgI"
+    short-id: "97a15f5af85c4a30"
+  flow: xtls-rprx-vision
+  name: 英国_7C9911
+- type: vless
+  server: 104.18.0.181
+  port: 2052
   udp: true
-- name: 🇨🇦 加拿大_05D79D
-  server: 149.248.18.106
-  port: 1081
-  type: socks5
-  udp: true
-  username: Og==
-- name: 🇨🇦 加拿大_87CC3E
-  server: 104.27.88.172
-  port: 80
-  type: vless
-  uuid: 50414e45-4c5f-5a45-5553-52108a2d5224
-  tls: false
-  tfo: false
-  skip-cert-verify: false
-  servername: web-app-nr6wpa.app-tp57xz.workers.dev
+  uuid: 5744e593-1cc8-48fa-b8ca-57cd494fe35b
   network: ws
   ws-opts:
-    path: /api/ws
+    path: /rain1226
     headers:
-      Host: web-app-nr6wpa.app-tp57xz.workers.dev
-  udp: true
-- name: 🇩🇪 德国_B91D81
-  server: 103.91.147.212
+      Host: eu02.123450908.xyz
+  name: 美国_9026F1
+- type: vless
+  server: 193.233.221.86
   port: 443
-  type: vless
-  uuid: 261160d5-0343-4b85-8c28-3d40dd681559
+  udp: true
+  uuid: 37ca5f34-2531-4fda-a781-20f3845fea88
   tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
-    short-id: ''
-  servername: de.ozon.ru
-  client-fingerprint: chrome
-  network: tcp
-  udp: true
-- name: 🇮🇹 意大利_7318A5
-  server: 202.50.253.36
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_9A5DD8
-  server: 202.50.253.63
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇹🇷 土耳其_D597D2
-  server: 45.74.158.57
-  port: 2218
-  type: vless
-  uuid: 4476ca08-bdb4-41c1-bae4-a960bdb28c19
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  reality-opts:
-    public-key: bWIOrQAqUWCrz6BGdwaG42xaV-HEo8sUdGqVktUh0XU
-    short-id: cc80ef
-  servername: www.apple.com
-  network: tcp
-  udp: true
-- name: 🇮🇹 意大利_2D82A2
-  server: 202.50.253.54
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_69461D
-  server: 202.50.253.72
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_5C2471
-  server: 202.50.253.27
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_2B96A5
-  server: 202.50.253.45
-  port: 19999
-  type: ss
-  udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇪🇪 爱沙尼亚_C71723
-  server: l415ng0o.himoy.space
-  port: 443
-  type: vless
-  uuid: 5131b5e9-2c3c-44a0-8f18-0641f3f21cac
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: JOoD5ze_pwrMnQoAIRVieQM8SPJjiLJEw1fwx57iYgk
-    short-id: bbd20b213341644c
-  servername: l415ng0o.himoy.space
+  servername: capableconjuretarnish.clarionconsult.info
   client-fingerprint: firefox
-  network: tcp
+  reality-opts:
+    public-key: "2iedjEliJfyf7VYxQjSHRiY0RY9ylwj-GtO4MCfuQhg"
+    short-id: "a50534e181896415"
+  flow: xtls-rprx-vision
+  name: 俄罗斯_F4CDA9
+- type: vless
+  server: 213.152.180.55
+  port: 2095
   udp: true
-- name: 🇮🇹 意大利_9C3F5C
-  server: 202.50.253.81
-  port: 19999
-  type: ss
+  uuid: 16107a06-1b5e-4060-8b48-e13a04b15e56
+  tls: true
+  servername: www.apple.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "OKksVHWL5JepTv7if7Ta_L_7vn8OxW0INwV71HJM1jI"
+    short-id: "3869d49a9a79e06a"
+  flow: xtls-rprx-vision
+  name: 西班牙_C47E88
+- type: vless
+  server: 83.136.209.31
+  port: 443
   udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_4A88F5
-  server: 202.50.253.18
-  port: 19999
-  type: ss
+  uuid: 047466dd-05aa-4331-abf7-322c5aaecf97
+  tls: true
+  servername: fra.viralforge.ru
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "HLKQ0JvyaZ16JNdl0pbEPkiVRYJDiZNzGz9prDMiw2s"
+    short-id: "a1b2c3d4b5"
+  flow: xtls-rprx-vision
+  name: 法国_FD4BEC
+- type: vless
+  server: 62.133.63.45
+  port: 8444
   udp: true
-  cipher: aes-256-gcm
-  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇮🇹 意大利_419D63
+  uuid: a346c521-7a7f-452b-9356-a4893feb5982
+  tls: true
+  servername: github.com
+  client-fingerprint: safari
+  reality-opts:
+    public-key: "FWitre1jinQR7qz5HQ0q2Q4Gg9xA9B0SyizCziN7Ch0"
+    short-id: "457fab2ac885dbe0"
+  network: grpc
+  grpc-opts:
+    grpc-service-name: GunService
+  name: 土耳其_D76460
+- type: vless
+  server: 213.152.180.104
+  port: 2093
+  udp: true
+  uuid: 19456d94-8f54-4f82-ae9c-0e19afb5c29c
+  tls: true
+  servername: www.apple.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "C_GA8wVjeLmyqLK6em5OHn4WPlsbndA-RyvyNU1aGFM"
+    short-id: "8a9725533854a7e8"
+  flow: xtls-rprx-vision
+  name: 加拿大_6D5D7C
+- type: ss
   server: 202.50.253.99
   port: 19999
-  type: ss
-  udp: true
   cipher: aes-256-gcm
   password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇺🇸 美国_16E0F1
+  udp: true
+  name: 意大利_520C2C
+- type: ss
+  server: 202.50.253.54
+  port: 19999
+  cipher: aes-256-gcm
+  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
+  udp: true
+  name: 意大利_E42ACB
+- type: ss
+  server: 202.50.253.45
+  port: 19999
+  cipher: aes-256-gcm
+  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
+  udp: true
+  name: 意大利_EBF985
+- type: vless
   server: 78.17.178.125
   port: 443
-  type: vless
+  udp: true
   uuid: 6c713691-3ca2-4446-ad25-113d1bed6b03
   tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: jcp4Lj_qYzxtkalm_XFjrmvqEMGRG7sb19yMwLe16WE
-    short-id: e0215064d8d1fd7c
   servername: cdn.tbank.ru
   client-fingerprint: chrome
-  network: tcp
-  udp: true
-- name: 🇮🇹 意大利_6EEC60
-  server: 202.50.253.90
+  reality-opts:
+    public-key: "jcp4Lj_qYzxtkalm_XFjrmvqEMGRG7sb19yMwLe16WE"
+    short-id: "e0215064d8d1fd7c"
+  flow: xtls-rprx-vision
+  name: 美国_AEE3FE
+- type: ss
+  server: 202.50.253.36
   port: 19999
-  type: ss
-  udp: true
   cipher: aes-256-gcm
   password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
-- name: 🇳🇱 荷兰_7C84BE
-  server: vb41fwol.himoy.space
-  port: 443
-  type: vless
-  uuid: 5131b5e9-2c3c-44a0-8f18-0641f3f21cac
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: false
-  reality-opts:
-    public-key: CwVoZSZr3MQ8IEaxOqmZRolV2Vw5Ve-hwhRLHuOerzg
-    short-id: 44aa59cc84b532ed
-  servername: vb41fwol.himoy.space
-  client-fingerprint: firefox
-  network: tcp
   udp: true
+  name: 意大利_EA4BA8
+- type: ss
+  server: 202.50.253.81
+  port: 19999
+  cipher: aes-256-gcm
+  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
+  udp: true
+  name: 意大利_1FE102
+- type: ss
+  server: 202.50.253.72
+  port: 19999
+  cipher: aes-256-gcm
+  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
+  udp: true
+  name: 意大利_9A6421
+- type: ss
+  server: 202.50.253.27
+  port: 19999
+  cipher: aes-256-gcm
+  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
+  udp: true
+  name: 意大利_E4DE05
+- type: ss
+  server: 202.50.253.18
+  port: 19999
+  cipher: aes-256-gcm
+  password: ZRpgaBeGxtENIXgvhpkZBKz9GnWRS2dYcx9O+a2iwN4=
+  udp: true
+  name: 意大利_61075C
+- type: vless
+  server: 213.152.180.55
+  port: 2089
+  udp: true
+  uuid: 38d3d211-cc9f-491a-a8ab-9a5be57bb712
+  tls: true
+  servername: www.apple.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "oRmj7gTi5H2oIClNYxxgOjqp8-j5kFYtGFU8CNuMj34"
+    short-id: "deccc6fac1ddb0ff"
+  flow: xtls-rprx-vision
+  name: 新加坡_5DB0AF
+- type: vless
+  server: 213.152.165.198
+  port: 2091
+  udp: true
+  uuid: 6a26029d-5639-473a-9234-3e80d0633d7d
+  tls: true
+  servername: www.apple.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "1N6AW5YuEwBoYcZK5KuugDzBHsa0NKZMT8QI-EmyL0k"
+    short-id: "08a4b1f473932632"
+  flow: xtls-rprx-vision
+  name: 香港_B76D9D
+- type: vless
+  server: f36f5ft.us4.h1clayd.click
+  port: 443
+  udp: true
+  uuid: 5a519754-a673-4462-83f6-5eb25d2af141
+  tls: true
+  servername: f36f5ft.us4.h1clayd.click
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "5KZVzOFqMgdL47--JzLlg5HmPlAYp-cmQsXxkTXngS0"
+    short-id: "8d50d3a4df71468c"
+  name: 美国_20AF40
+- type: vless
+  server: 213.152.180.55
+  port: 2090
+  udp: true
+  uuid: 9a92729a-7b89-475b-a651-cfd246524403
+  tls: true
+  servername: www.apple.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "qBobe6KSNkFLqTPCffcJo0nXgxy-3JKru9WRqY9rkjk"
+    short-id: "bb472a184677af64"
+  flow: xtls-rprx-vision
+  name: 日本_52D99D
+- type: vless
+  server: 213.152.180.55
+  port: 2092
+  udp: true
+  uuid: 4d8cc1c2-2605-43c4-8e17-dcafa86d9757
+  tls: true
+  servername: www.apple.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "zeyIqmHylDrPbbtdG9BleBt0-fqKCHpZ0OZ9OY2_WUI"
+    short-id: "716b7eba38125f3a"
+  flow: xtls-rprx-vision
+  name: 法国_5427CC
+- type: vless
+  server: 5.253.28.240
+  port: 40443
+  udp: true
+  uuid: 405b964e-a2d2-454f-aaaa-711cc218897c
+  tls: true
+  servername: deepl.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "cwmcqsfS7klQlkcoUNuATEk0NiPY-NnRb9z8rCJDQw0"
+    short-id: "88b6"
+  flow: xtls-rprx-vision
+  name: 印度_E0E313
+- type: vless
+  server: 213.152.180.104
+  port: 2095
+  udp: true
+  uuid: 16107a06-1b5e-4060-8b48-e13a04b15e56
+  tls: true
+  servername: www.apple.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "OKksVHWL5JepTv7if7Ta_L_7vn8OxW0INwV71HJM1jI"
+    short-id: "3869d49a9a79e06a"
+  flow: xtls-rprx-vision
+  name: 西班牙_1035A6
+- type: vless
+  server: 79.182.39.35
+  port: 25548
+  udp: true
+  uuid: 5a519754-a673-4462-83f6-5eb25d2af141
+  tls: true
+  servername: www.cloudflare.com
+  client-fingerprint: firefox
+  reality-opts:
+    public-key: "lceynvFy326oU4ew9OPR7079m-L5ZcFELgCl0sqxU2M"
+    short-id: "bceb5b2197b76818"
+  name: 波兰_8A42F8
+- type: vless
+  server: 3f8efdt.fi1.h1clayd.click
+  port: 443
+  udp: true
+  uuid: 9a0e84f8-4b58-477f-99da-5fac5a2e58e8
+  tls: true
+  servername: 3f8efdt.fi1.h1clayd.click
+  client-fingerprint: firefox
+  reality-opts:
+    public-key: "1D_o1pqfVoReg9zLPKNy1wCL7aGWytbmbYPbbJGaozY"
+    short-id: "023a1e6ffc32be10"
+  name: 芬兰_214E80
+- type: vless
+  server: 213.152.180.55
+  port: 2088
+  udp: true
+  uuid: 0ac16dd6-2f00-4e35-9a4d-479fd2755475
+  tls: true
+  servername: www.apple.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "bvG7GBU_gOKuBuAagnC07EbQZ_2tJ8OhBNSVGkHSugo"
+    short-id: "66d62ef550107695"
+  flow: xtls-rprx-vision
+  name: 美国_314BD6
+- type: vless
+  server: snp.bsh-net.ru
+  port: 443
+  udp: true
+  uuid: a0fa7e19-70ec-41e0-b0cc-bcc984d4201a
+  tls: true
+  servername: snp.bsh-net.ru
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "iE4sTz-Q2Frkm7WM32P1wm4at49Wpaj5vo-2FsLcN1M"
+    short-id: "8854f17e2a5af2d8"
+  flow: xtls-rprx-vision
+  name: 新加坡_BB464A
+- type: vless
+  server: 216.167.126.97
+  port: 443
+  udp: true
+  uuid: e5c3d067-7a15-4977-90c0-7e0f6e896a09
+  tls: true
+  servername: www.cloudflare.com
+  client-fingerprint: chrome
+  reality-opts:
+    public-key: "yFvOpugh65xKQNAwKrhitv4d2pflD8QwNFMj-jDOmT8"
+    short-id: "0123456789abcdef"
+  flow: xtls-rprx-vision
+  name: 美国_10AA04
