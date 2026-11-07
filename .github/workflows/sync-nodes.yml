@@ -46,6 +46,13 @@ jobs:
             --sparse \
             "${SRC_REPO}" .freenodes-src
           git -C .freenodes-src sparse-checkout set "${SRC_SUBDIR}"
+
+          # 每个文件的上游更新时间依赖完整提交历史；浅克隆会把所有文件压成同一时间
+          if [ "$(git -C .freenodes-src rev-parse --is-shallow-repository)" = "true" ]; then
+            echo "::warning::源仓库为浅克隆，正在补全历史"
+            git -C .freenodes-src fetch --unshallow --no-tags
+          fi
+          echo "源仓库提交数: $(git -C .freenodes-src rev-list --count HEAD)"
           git -C .freenodes-src rev-parse --short HEAD
 
       - name: 拷贝文件到本地 ${DST_SUBDIR} 目录
@@ -60,7 +67,23 @@ jobs:
           fi
           echo "文件总数: $(find "${DST_SUBDIR}" -type f ! -name 'index.md' | wc -l)"
 
+      - name: 检测同步变更
+        id: changes
+        run: |
+          set -euo pipefail
+          # 只比较同步目录相对 HEAD 的增删改；仅 mtime 变化不会被 git 视为修改
+          CHANGED="$(git status --porcelain -- "${DST_SUBDIR}")"
+          if [ -n "${CHANGED}" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "检测到 ${DST_SUBDIR} 有变更："
+            printf '%s\n' "${CHANGED}"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::${DST_SUBDIR} 无变更，跳过索引生成、提交推送与静态站点发布"
+          fi
+
       - name: 生成 index.html
+        if: ${{ steps.changes.outputs.changed == 'true' }}
         run: |
           set -euo pipefail
           # index.html 只生成到站点目录，不写入 ${DST_SUBDIR}，因此不会入库
@@ -73,6 +96,7 @@ jobs:
           import html
           import os
           import subprocess
+          import sys
           import urllib.parse
           from datetime import datetime, timezone
 
@@ -82,6 +106,29 @@ jobs:
           out_path = os.environ["OUT"]
           repo = os.environ["SRC_REPO"]
           branch = os.environ["SRC_BRANCH"]
+
+          SEP = "\x1e"       # git log 中每次提交记录的分隔哨兵
+          MISSING = "-"      # 无法确认上游时间时的占位符
+
+          def run_git(args):
+              # 关闭改名检测，避免 blob:none 部分克隆为查历史去按需拉取文件内容
+              return subprocess.run(
+                  ["git", "-C", src_dir,
+                   "-c", "diff.renames=false",
+                   "-c", "core.quotePath=false"] + args,
+                  capture_output=True,
+                  text=True,
+                  check=True,
+              )
+
+          def to_utc(value):
+              # %cI 是严格 ISO 8601，如 2026-11-06T11:57:19+00:00
+              try:
+                  return datetime.fromisoformat(value.strip()).astimezone(timezone.utc).strftime(
+                      "%Y-%m-%d %H:%M:%S UTC"
+                  )
+              except (ValueError, TypeError):
+                  return value.strip()
 
           def list_files():
               found = []
@@ -94,37 +141,59 @@ jobs:
                       found.append(rel)
               return sorted(found)
 
-          def updated_at(rel):
-              # 优先使用源仓库中该文件最后一次提交的时间
+          def line_count(rel):
+              # 二进制分块统计：空文件为 0，末行没有换行符也计 1 行
               try:
-                  res = subprocess.run(
-                      ["git", "-C", src_dir, "log", "-1", "--format=%cI", "--", src_sub + "/" + rel],
-                      capture_output=True,
-                      text=True,
-                      check=True,
-                  )
-                  value = res.stdout.strip()
-                  if value:
-                      return value
-              except Exception:
-                  pass
-              try:
-                  ts = os.path.getmtime(os.path.join(dst_dir, rel))
-                  return datetime.fromtimestamp(ts, timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+0000")
-              except Exception:
-                  return "-"
+                  total = 0
+                  tail = b""
+                  with open(os.path.join(dst_dir, *rel.split("/")), "rb") as fp:
+                      while True:
+                          chunk = fp.read(1024 * 1024)
+                          if not chunk:
+                              break
+                          total += chunk.count(b"\n")
+                          tail = chunk[-1:]
+                  return total + (1 if tail and not tail.endswith(b"\n") else 0)
+              except OSError:
+                  return MISSING
+
+          def upstream_times():
+              # 一次遍历上游历史，得到每个文件最后一次被修改的提交时间
+              res = run_git([
+                  "log",
+                  "--format=%x1e%cI",
+                  "--name-only",
+                  "--no-renames",
+                  "--no-decorate",
+                  "--",
+                  src_sub,
+              ])
+              times = {}
+              prefix = src_sub + "/"
+              current = ""
+              # 不能用 splitlines()：它会把哨兵 \x1e 也当作行分隔符
+              for line in res.stdout.split("\n"):
+                  if line.startswith(SEP):
+                      current = to_utc(line[len(SEP):])
+                  elif current and line.strip():
+                      path = line.strip()
+                      if path.startswith(prefix):
+                          times.setdefault(path[len(prefix):], current)
+              return times
+
+          def last_commit_time(rel):
+              # 单次遍历未覆盖到该文件时，按精确路径单独兜底
+              res = run_git([
+                  "log", "-1", "--format=%cI", "--no-renames", "--",
+                  ":(top,literal)" + src_sub + "/" + rel,
+              ])
+              return res.stdout.strip()
 
           def source_commit():
               try:
-                  res = subprocess.run(
-                      ["git", "-C", src_dir, "rev-parse", "HEAD"],
-                      capture_output=True,
-                      text=True,
-                      check=True,
-                  )
-                  return res.stdout.strip()
+                  return run_git(["rev-parse", "HEAD"]).stdout.strip()
               except Exception:
-                  return "-"
+                  return MISSING
 
           css = (
               'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;'
@@ -135,16 +204,47 @@ jobs:
               "tr:nth-child(2n){background:#f6f8fa}"
               "code{background:#f6f8fa;padding:.2em .4em;border-radius:6px;font-size:85%}"
               "a{color:#0969da;text-decoration:none}a:hover{text-decoration:underline}"
+              "th:nth-child(2),td:nth-child(2){text-align:right}"
+              "th:nth-child(3),td:nth-child(3){white-space:nowrap}"
           )
 
           files = list_files()
+          try:
+              times = upstream_times()
+          except subprocess.CalledProcessError as exc:
+              print("::error::读取上游提交历史失败: " + (exc.stderr or "").strip()[:300])
+              sys.exit(1)
+
+          try:
+              commit_count = int(run_git(["rev-list", "--count", "HEAD"]).stdout.strip())
+          except (subprocess.CalledProcessError, ValueError):
+              commit_count = 0
+
+          for rel in files:
+              if rel not in times:
+                  try:
+                      value = last_commit_time(rel)
+                      if value:
+                          times[rel] = to_utc(value)
+                  except subprocess.CalledProcessError as exc:
+                      print("::warning::无法获取上游时间 " + rel + ": " + (exc.stderr or "").strip()[:200])
+
+          if commit_count > 0 and not times:
+              print("::error::上游历史共 %d 次提交，但未解析到任何文件的上游更新时间，终止生成以免发布错误索引" % commit_count)
+              sys.exit(1)
+          missing = [rel for rel in files if rel not in times]
+          if missing:
+              print("::warning::%d 个文件未找到上游提交时间，显示为 %s: %s" % (
+                  len(missing), MISSING, ", ".join(missing[:20])))
+
           rows = []
           for rel in files:
               href = urllib.parse.quote(rel)
               label = html.escape(os.path.basename(rel))
               rows.append(
                   '<tr><td><a href="' + href + '">' + label + "</a></td><td>"
-                  + html.escape(updated_at(rel)) + "</td></tr>"
+                  + html.escape(str(line_count(rel))) + "</td><td>"
+                  + html.escape(times.get(rel, MISSING)) + "</td></tr>"
               )
           generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
           doc = (
@@ -162,14 +262,15 @@ jobs:
               "分支: <code>" + html.escape(branch) + "</code><br>"
               "源目录: <code>" + html.escape(src_sub) + "/</code><br>"
               "源提交: <code>" + html.escape(source_commit()) + "</code><br>"
-              "生成时间: " + generated + "</p>\n"
+              "页面生成时间: " + generated + "</p>\n"
               "<table>\n"
-              "<thead><tr><th>文件名</th><th>更新时间</th></tr></thead>\n"
+              "<thead><tr><th>文件名</th><th>行数</th><th>上游更新时间</th></tr></thead>\n"
               "<tbody>\n"
               + "\n".join(rows) + "\n"
               "</tbody>\n"
               "</table>\n"
               "<p>共 " + str(len(files)) + " 个文件。</p>\n"
+              "<p>上游更新时间取自该文件在源仓库最后一次提交的时间（UTC）；页面仅在同步内容有变化时重新生成。</p>\n"
               "</body>\n"
               "</html>\n"
           )
@@ -178,16 +279,20 @@ jobs:
           with open(out_path, "w", encoding="utf-8") as fp:
               fp.write(doc)
 
-          print("index.html 已生成，共 %d 个文件" % len(files))
+          print("index.html 已生成，共 %d 个文件，解析到 %d 个上游时间戳" % (len(files), len(times)))
           PY
    
+      - name: 清理临时源仓库
+        if: always()
+        run: rm -rf .freenodes-src
+
       - name: 提交并推送
+        if: ${{ steps.changes.outputs.changed == 'true' }}
         env:
           # 推送到触发器所在的分支；workflow_dispatch 时取当前分支，schedule 时取默认分支
           TARGET_BRANCH: ${{ github.head_ref || github.ref_name }}
         run: |
           set -euo pipefail
-          rm -rf .freenodes-src
 
           # 定时任务在默认分支的 ref 上运行，gh-pages 等特殊 ref 下不做推送
           if [ -z "${TARGET_BRANCH}" ] || [ "${TARGET_BRANCH}" = "gh-pages" ]; then
@@ -210,11 +315,11 @@ jobs:
           echo "推送成功 -> ${TARGET_BRANCH}"
                  
       - name: 配置 Pages
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: ${{ steps.changes.outputs.changed == 'true' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
         uses: actions/configure-pages@v5
 
       - name: 构建静态站点
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: ${{ steps.changes.outputs.changed == 'true' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
         run: |
           set -euo pipefail
           mkdir -p _site
@@ -226,12 +331,12 @@ jobs:
           echo "站点文件数: $(find _site -type f | wc -l)"
 
       - name: 上传 Pages 产物
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: ${{ steps.changes.outputs.changed == 'true' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
 
       - name: 部署到 GitHub Pages
         id: deployment
-        if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        if: ${{ steps.changes.outputs.changed == 'true' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
         uses: actions/deploy-pages@v4
